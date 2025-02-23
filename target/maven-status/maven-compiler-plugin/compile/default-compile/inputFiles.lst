@@ -1,7 +1,10 @@
 /Users/sita/Downloads/cs469-tp1/src/main/java/fr/esisar/cs467/tcp/ResponseHttpCode.java
 /Users/sita/Downloads/cs469-tp1/src/main/java/fr/esisar/cs467/tcp/Response.java
+/Users/sita/Downloads/cs469-tp1/src/main/java/fr/esisar/cs467/tcp/Connection.java
 /Users/sita/Downloads/cs469-tp1/src/main/java/fr/esisar/cs467/tcp/HttpRequestHandler.java
+/Users/sita/Downloads/cs469-tp1/src/main/java/fr/esisar/cs467/tcp/HttpRequest.java
 /Users/sita/Downloads/cs469-tp1/src/main/java/fr/esisar/cs467/http/HttpServerRequestHandler.java
 /Users/sita/Downloads/cs469-tp1/src/main/java/fr/esisar/cs467/tcp/Request.java
+/Users/sita/Downloads/cs469-tp1/src/main/java/fr/esisar/cs467/tcp/TcpHttpServerVerticle.java
 /Users/sita/Downloads/cs469-tp1/src/main/java/fr/esisar/cs467/App.java
 /Users/sita/Downloads/cs469-tp1/src/main/java/fr/esisar/cs467/http/HttpServerVerticle.java
