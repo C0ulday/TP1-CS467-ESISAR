@@ -39,12 +39,40 @@ public class HttpRequest implements Handler<Buffer> {
 		this.socket = socket;
 	}
 	
-
 	@Override
 	public void handle(Buffer buffer) {
 		
-		request.parseRequestHeaders(buffer.toString());
-		new HttpRequestHandler(socket, request).handle(); 
+	    // On choppe les trames dans le body
+	    body.append(buffer.toString());
 
+	    // On attend la fin de l'obtention des entêtes (fini par "\r\n\r\n")
+	    int headerEndIndex = body.indexOf("\r\n\r\n");
+	    if (headerEndIndex == -1) {
+	        return;
+	    }
+
+	    // Parsing
+	    request.parseRequestHeaders(body.toString());
+
+	    // Recherche de la taille de données obtenues
+	    String contentLengthHeader = request.getHeaders().get("content-length");
+	    if (contentLengthHeader != null) {
+	        try {
+	            int expectedLength = Integer.parseInt(contentLengthHeader);
+	            if (request.getBody().length() < expectedLength) {
+	                // Le corps n'est pas encore complet, on attend plus de données
+	                return;
+	            }
+	        } catch (NumberFormatException e) {
+	            return;
+	        }
+	    }
+
+	    // Tous les fragments ont été reçus, on traite la requête
+	    new HttpRequestHandler(socket, request).handle();
+
+	    // Réinitialiser du StringBuilder
+	    body.setLength(0);
 	}
+
 }
