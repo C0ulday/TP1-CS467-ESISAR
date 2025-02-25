@@ -1,12 +1,8 @@
 package fr.esisar.cs467.tcp;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import io.vertx.core.Handler;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.net.NetSocket;
-import io.vertx.core.http.HttpMethod;
 
 public class HttpRequest implements Handler<Buffer> {
 	
@@ -47,41 +43,8 @@ public class HttpRequest implements Handler<Buffer> {
 	@Override
 	public void handle(Buffer buffer) {
 		
-		Map<String, String> headers = new HashMap<>();
-		
-		String data = buffer.toString();
-		String[] parts = data.split("\r\n\r\n");
-		String header = parts[0];
-		String bodyPart = parts[1];
-		
-		// Première ligne de la requête
-		String[] lines = header.split("\r\n");
-		if (lines.length > 0) {
-			String requestLine = lines[0];
-            String[] requestLineParts = requestLine.split(" ");
-            request.setMethod(HttpMethod.valueOf(requestLineParts[0]));        
-            request.setPath(requestLineParts[1]);  
-            request.setHttpVersion(requestLineParts[2]);
-		}
-		// Les key,value du header
-		for (int i = 1; i < lines.length; i++) {
-            String headerLine = lines[i];
-            int colonIndex = headerLine.indexOf(":");
-            if (colonIndex != -1) {
-                String headerName = headerLine.substring(0, colonIndex).trim();
-                String headerValue = headerLine.substring(colonIndex + 1).trim();
-                headers.put(headerName, headerValue);
-            }
-		}
-		
-		request.setBody(bodyPart);		
-		// Répondre au client
-        String response = "HTTP/1.1 200 OK\r\nContent-Length: 0\r\n\r\n";
-        socket.write(response);
+		request.parseRequestHeaders(buffer.toString());
+		new HttpRequestHandler(socket, request).handle(); 
 
-        // Réinitialiser le corps et la requête après avoir répondu
-        body.setLength(0);
-        request = new Request();
 	}
-
 }

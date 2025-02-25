@@ -85,36 +85,30 @@ public class Request {
 		// Après avoir rétirer les espaces et mis en miniscules/maj (pas de casses) : on
 		// convertit la méthode en objet HttpMethod
 		method = HttpMethod.valueOf(requete[0].trim().toUpperCase());
-		path = requete[1].trim().toLowerCase();
-		httpVersion = requete[2].trim().toLowerCase();
+		path = requete[1].trim();
+		httpVersion = requete[2].trim().toUpperCase();
 		int i = 1;
 		// Recherche des entêtes
-		for (; i < lines.length; i++) {
-
-			// Au cas où on a une ligne vide entre les entêtes
-			if (lines[i].isEmpty())
-				i++;
+		for (; i < lines.length && !lines[i].isEmpty(); i++) {
 
 			if (lines[i].contains(": ")) {
 				String[] str = lines[i].split(": ", 2);
 				// On ajoute la paire key,value
-				headers.put(str[0].trim().toLowerCase(), str[1].trim().toLowerCase());
+				headers.put(str[0].trim().toLowerCase(), str[1].trim());
 			} else {
 				// Si on n'a pas de séparateur on s'arrête
 				break;
 			}
 		}
 		// Gestion du body
-		if (i < lines.length) {
-			StringBuilder string = new StringBuilder();
-			for (int j = 0; j < lines.length; j++) {
-				string.append(lines[j]);
-			}
-			string.append("\r\n");
-			body = string.toString();
-		} else {
-			body = "";
-		}
+		StringBuilder bodyBuilder = new StringBuilder();
+	    for (i = i + 1; i < lines.length; i++) { // On saute la ligne vide
+	        bodyBuilder.append(lines[i]);
+	        if (i < lines.length - 1) {
+	            bodyBuilder.append("\r\n");
+	        }
+	    }
+	    body = bodyBuilder.toString();
 	}
 
 }

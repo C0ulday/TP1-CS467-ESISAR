@@ -1,5 +1,6 @@
 package fr.esisar.cs467.tcp;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Response {
@@ -12,7 +13,7 @@ public class Response {
     
 	public Response(ResponseHttpCode responseHttpCode, Map<String, String> headers, String body) {
 		this.responseHttpCode = responseHttpCode;
-		this.headers = headers;
+		this.headers = (headers != null) ? new HashMap<>(headers) : new HashMap<>();
 		this.body = body;
 	}
 

@@ -10,7 +10,7 @@ public class TcpHttpServerVerticle extends AbstractVerticle {
             .connectHandler(new Connection())
             .listen(8080)
             .onComplete(
-                server -> System.out.println("Le serveur écoyte sur le port... : " + server.actualPort()), 
+                server -> System.out.println("Le serveur écoute sur le port... : " + server.actualPort()), 
                 serverFail -> System.out.println("Impossible de démarrer le serveur : " + serverFail.getMessage())
             );
     }

@@ -1,7 +1,10 @@
+fr/esisar/cs467/tcp/HttpRequestHandler.class
 fr/esisar/cs467/http/HttpServerRequestHandler.class
+fr/esisar/cs467/tcp/ResponseHttpCode.class
 fr/esisar/cs467/tcp/Request.class
+fr/esisar/cs467/tcp/TcpHttpServerVerticle.class
+fr/esisar/cs467/tcp/HttpRequest.class
+fr/esisar/cs467/tcp/Response.class
 fr/esisar/cs467/App.class
 fr/esisar/cs467/http/HttpServerVerticle.class
-fr/esisar/cs467/tcp/HttpRequestHandler.class
-fr/esisar/cs467/tcp/ResponseHttpCode.class
-fr/esisar/cs467/tcp/Response.class
+fr/esisar/cs467/tcp/Connection.class
